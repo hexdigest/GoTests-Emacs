@@ -1,11 +1,11 @@
-;;; gotests.el --- Emacs package for https://github.com/cweill/gotests 
+;;; gounit.el --- Emacs package for https://github.com/hexdigest/gounit 
 
 ;; Copyright (C) 2016  Damien Levin
 
 ;; Author: Damien Levin
-;; Keywords: go gotests languages 
+;; Keywords: go test gounit languages 
 ;; Version: 0.0.2
-;; URL: https://github.com/damienlevin/GoTests-Emacs/blob/master/gotests.el
+;; URL: https://github.com/hexdigest/GoUnit-Emacs/blob/master/gounit.el
 
 ;; Apache License (version 2.0).
 
@@ -29,20 +29,20 @@
 ;; Execute `gen` if we are not in a test file.
 (defun gen-if-not-test(gen)
   (if (string-match "_test.go\\'" buffer-file-name)
-    (message "Cannot generate gotests from test file.")
+    (message "Cannot generate gounit from test file.")
   (funcall gen)))
 
 ;; Generate all missing go tests.
-(defun gotests()
+(defun gounit()
   (interactive)
   (gen-if-not-test 
-   (lambda() (call-process "gotests" nil nil nil "-all" "-w" buffer-file-name))))
+   (lambda() (call-process "gounit" nil nil nil "-all" "-i" buffer-file-name))))
 
 ;; Generate all missing go tests in region.
-(defun gotests-region()
+(defun gounit-region()
   (interactive)
   (gen-if-not-test 
-   (lambda() (call-process "gotests" nil nil nil "-w" "-only" (mapconcat 'identity (go-functions (buffer-substring (region-beginning) (region-end))) "|") buffer-file-name))))
+   (lambda() (call-process "gounit" nil nil nil "-i" buffer-file-name "-f" (mapconcat 'identity (go-functions (buffer-substring (region-beginning) (region-end))) ",") ))))
 
-(provide 'gotests)
-;;; gotests.el ends here
+(provide 'gounit)
+;;; gounit.el ends here
