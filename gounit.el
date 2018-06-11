@@ -36,13 +36,13 @@
 (defun gounit()
   (interactive)
   (gen-if-not-test 
-   (lambda() (call-process "gounit" nil nil nil "-all" "-i" buffer-file-name))))
+   (lambda() (call-process "gounit" nil nil nil "gen" "-all" "-i" buffer-file-name))))
 
 ;; Generate all missing go tests in region.
 (defun gounit-region()
   (interactive)
   (gen-if-not-test 
-   (lambda() (call-process "gounit" nil nil nil "-i" buffer-file-name "-f" (mapconcat 'identity (go-functions (buffer-substring (region-beginning) (region-end))) ",") ))))
+   (lambda() (call-process "gounit" nil nil nil "gen" "-i" buffer-file-name "-f" (mapconcat 'identity (go-functions (buffer-substring (region-beginning) (region-end))) ",") ))))
 
 (provide 'gounit)
 ;;; gounit.el ends here
